@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Baseclass by cobbdb</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/cobbdb/baseclass">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/cobbdb/baseclass/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/cobbdb/baseclass/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Baseclass</h1>
+          <p>Lean yet robust JavaScript inheritance.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/cobbdb">cobbdb</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="baseclass--" class="anchor" href="#baseclass--"><span class="octicon octicon-link"></span></a>BaseClass <a href="http://badge.fury.io/bo/baseclass"><img src="https://badge.fury.io/bo/baseclass.svg" alt="Bower version"></a> <a href="http://badge.fury.io/js/baseclassjs"><img src="https://badge.fury.io/js/baseclassjs.svg" alt="NPM version"></a>
+</h1>
+
+<p>Lean yet robust JavaScript inheritance.</p>
+
+<pre><code>$ bower install baseclass
+$ npm install baseclassjs
+</code></pre>
+
+<hr><p>BaseClass is an alternative to many of the overbearing and intrusive inheritance libraries
+such as Ember and even Fiber. Code in natural JavaScript but now with the power of simple
+inheritance.</p>
+
+<p>Here's a quick example showing a typical class setup.</p>
+
+<pre><code>// Your app's library
+var Pet = function (name) {
+    return {
+        name: name,
+        color: 'gray',
+        speak: function () {
+            console.log('Hi there!');
+        },
+        // Just add this one method to your base class and
+        // you're all set up! Simple as can be!
+        extend: BaseClass
+    };
+};
+var Dog = function (name) {
+    var parent = Pet(name);
+    return parent.extend({
+        color: 'black',
+        speak: function () {
+            // The parent's color is gray, which we access with this.base.
+            // Just use this.color to access this child's color of black if desired.
+            this.base.speak();
+            console.log("I'm " + name + " and I'm a "  + this.base.color + ' dog.');
+        }
+    });
+};
+
+// Your app's runtime
+var woofie = Dog('Woofie');
+woofie.speak(); // --&gt; Hi there! I'm Woofie and I'm a gray dog.
+</code></pre>
+
+<p>This inheritance chain can continue on as deep as you want it to be. To reach deeper into the
+chain, just use the <code>.base</code> notation. For example if you want data from two levels deep, that
+would look like <code>child.base.base.data</code>.</p>
+
+<p>Since all properties are brought over to each child, your will always have access to an <code>extend</code>
+method to create more children.</p>
+
+<hr><ul>
+<li>See: <a href="http://cobbdb.github.io/baseclass/">http://cobbdb.github.io/baseclass/</a>
+</li>
+<li>See: <a href="http://github.com/cobbdb/baseclass">http://github.com/cobbdb/baseclass</a>
+</li>
+<li>License: MIT</li>
+</ul>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-50240363-6");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
