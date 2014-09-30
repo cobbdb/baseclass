@@ -1,0 +1,37 @@
+{
+  "name": "baseclass",
+  "version": "1.0.0",
+  "description": "Lean yet robust JavaScript inheritance.",
+  "main": "dist/baseclass.min.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cobbdb/baseclass.git"
+  },
+  "keywords": [
+    "inheritance",
+    "parasitic",
+    "crockford",
+    "simple",
+    "easy",
+    "fast",
+    "minimal",
+    "super",
+    "class"
+  ],
+  "author": "Dan Cobb <cobbdb@gmail.com> (http://www.github.com/cobbdb)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cobbdb/baseclass/issues"
+  },
+  "homepage": "https://github.com/cobbdb/baseclass",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jasmine": "^0.8.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "matchdep": "^0.3.0"
+  }
+}

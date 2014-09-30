@@ -1,0 +1,32 @@
+{
+  "name": "baseclass",
+  "version": "1.0.0",
+  "homepage": "https://github.com/cobbdb/baseclass",
+  "authors": [
+    "cobbdb <cobbdb@gmail.com>"
+  ],
+  "description": "Lean yet robust JavaScript inheritance.",
+  "main": "dist/baseclass.min.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "inheritance",
+    "parasitic",
+    "crockford",
+    "simple",
+    "easy",
+    "fast",
+    "minimal",
+    "super",
+    "class"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
