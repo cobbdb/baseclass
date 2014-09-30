@@ -1,5 +1,5 @@
 {
-  "name": "base-class",
+  "name": "baseclassjs",
   "version": "1.0.0",
   "description": "Lean yet robust JavaScript inheritance.",
   "main": "dist/baseclass.min.js",
