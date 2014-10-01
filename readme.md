@@ -16,7 +16,6 @@ Here's a quick example showing a typical class setup.
     var Pet = function (name) {
         return {
             name: name,
-            color: 'gray',
             speak: function () {
                 console.log('Hi there!');
             },
@@ -26,21 +25,18 @@ Here's a quick example showing a typical class setup.
         };
     };
     var Dog = function (name) {
-        var parent = Pet(name);
-        return parent.extend({
-            color: 'black',
+        return Pet(name).extend({
+            color: 'grey',
             speak: function () {
-                // The parent's color is gray, which we access with this.base.
-                // Just use this.color to access this child's color of black if desired.
                 this.base.speak();
-                console.log("I'm " + name + " and I'm a "  + this.base.color + ' dog.');
+                console.log("I'm " + name + " and I'm a "  + this.color + ' dog.');
             }
         });
     };
 
     // Your app's runtime
     var woofie = Dog('Woofie');
-    woofie.speak(); // --> Hi there! I'm Woofie and I'm a gray dog.
+    woofie.speak(); // --> Hi there! I'm Woofie and I'm a grey dog.
 
 This inheritance chain can continue on as deep as you want it to be. To reach deeper into the
 chain, just use the `.base` notation. For example if you want data from two levels deep, that
