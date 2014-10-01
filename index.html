@@ -4,40 +4,32 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Baseclass by cobbdb</title>
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
+    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/cobbdb/baseclass">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/cobbdb/baseclass/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/cobbdb/baseclass/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
     <div class="wrapper">
+      <header>
+        <h1 class="header">Baseclass</h1>
+        <p class="header">Lean yet robust JavaScript inheritance.</p>
 
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/cobbdb/baseclass/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/cobbdb/baseclass/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/cobbdb/baseclass">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/cobbdb">cobbdb</a></p>
+
+
+      </header>
       <section>
-        <div id="title">
-          <h1>Baseclass</h1>
-          <p>Lean yet robust JavaScript inheritance.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/cobbdb">cobbdb</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-
         <h1>
 <a name="baseclass--" class="anchor" href="#baseclass--"><span class="octicon octicon-link"></span></a>BaseClass <a href="http://badge.fury.io/bo/baseclass"><img src="https://badge.fury.io/bo/baseclass.svg" alt="Bower version"></a> <a href="http://badge.fury.io/js/baseclassjs"><img src="https://badge.fury.io/js/baseclassjs.svg" alt="NPM version"></a>
 </h1>
@@ -58,7 +50,6 @@ inheritance.</p>
 var Pet = function (name) {
     return {
         name: name,
-        color: 'gray',
         speak: function () {
             console.log('Hi there!');
         },
@@ -68,21 +59,18 @@ var Pet = function (name) {
     };
 };
 var Dog = function (name) {
-    var parent = Pet(name);
-    return parent.extend({
-        color: 'black',
+    return Pet(name).extend({
+        color: 'grey',
         speak: function () {
-            // The parent's color is gray, which we access with this.base.
-            // Just use this.color to access this child's color of black if desired.
             this.base.speak();
-            console.log("I'm " + name + " and I'm a "  + this.base.color + ' dog.');
+            console.log("I'm " + name + " and I'm a "  + this.color + ' dog.');
         }
     });
 };
 
 // Your app's runtime
 var woofie = Dog('Woofie');
-woofie.speak(); // --&gt; Hi there! I'm Woofie and I'm a gray dog.
+woofie.speak(); // --&gt; Hi there! I'm Woofie and I'm a grey dog.
 </code></pre>
 
 <p>This inheritance chain can continue on as deep as you want it to be. To reach deeper into the
@@ -100,10 +88,12 @@ method to create more children.</p>
 <li>License: MIT</li>
 </ul>
       </section>
-
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-              <script type="text/javascript">
+		          <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
