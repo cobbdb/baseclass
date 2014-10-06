@@ -10,4 +10,8 @@ describe('First level inheritance', function () {
         var test = Animal('TSTname');
         expect(test.extend).toBeDefined();
     });
+    it('can extend without child', function () {
+        var sub = Animal('NAme').extend();
+        expect(sub.name).toEqual('NAme');
+    });
 });
