@@ -59,7 +59,7 @@ from the BaseClass function. Simply drop it into place like this:
             drive: BaseClass.Abstract
         };
     };
-    var Car = function () {
+    var Car = function (model) {
         return Vehicle(model).extend({
             color: 'blue'
             // Notice we did -not- override the drive() method.
