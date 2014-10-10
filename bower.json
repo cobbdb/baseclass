@@ -6,7 +6,7 @@
     "cobbdb <cobbdb@gmail.com>"
   ],
   "description": "Lean yet robust JavaScript inheritance.",
-  "main": "dist/baseclass.min.js",
+  "main": "dist/bower/baseclass.min.js",
   "moduleType": [
     "globals"
   ],
