@@ -1,6 +1,6 @@
 {
   "name": "baseclassjs",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Lean yet robust JavaScript inheritance.",
   "main": "dist/node/baseclass.min.js",
   "scripts": {
