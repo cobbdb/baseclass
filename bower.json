@@ -29,7 +29,7 @@
     "test",
     "tests",
     "tasks",
-    "*.js",
-    "*.json"
+    "./*.js",
+    "./*.json"
   ]
 }
