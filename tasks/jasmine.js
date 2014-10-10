@@ -2,7 +2,7 @@ module.exports = function (grunt) {
     grunt.config.merge({
         jasmine: {
             dist: {
-                src: 'dist/*.js',
+                src: 'dist/bower/*.js',
                 options: {
                     specs: [
                         'tests/*.spec.js'
@@ -10,9 +10,9 @@ module.exports = function (grunt) {
                 }
             },
             src: {
-                src: 'src/*.js',
+                src: 'src/baseclass.js',
                 options: {
-                    specs: 'tests/**/*.spec.js'
+                    specs: 'tests/*.spec.js'
                 }
             },
             options: {
