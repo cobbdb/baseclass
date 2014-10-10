@@ -28,8 +28,6 @@
     "bower_components",
     "test",
     "tests",
-    "tasks",
-    "./*.js",
-    "./*.json"
+    "tasks"
   ]
 }
