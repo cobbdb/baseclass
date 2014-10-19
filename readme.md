@@ -2,7 +2,7 @@
 
 Lean yet robust JavaScript inheritance.
 
-    $ bower install baseclass
+    $ bower install baseclassjs
     $ npm install baseclassjs
 
 -------------
@@ -10,20 +10,23 @@ BaseClass is an alternative to many of the overbearing and intrusive inheritance
 such as Ember and even Fiber. Code in natural JavaScript but now with the power of simple
 inheritance.
 
-## BaseClass & extend()
+BaseClass is provided as a node and Browserify module, as well as a global function. You can
+pick whichever version you prefer. The node and Browserify module lives in:
+`dist/node/baseclass.min.js`, and the global function lives in `dist/bower/baseclass.min.js`.
+
+## BaseClass() & extend()
 Here's a quick example showing a typical class setup.
 
     // class-definition.js
+    var BaseClass = require('baseclassjs');
     var Pet = function (name) {
-        return {
+        // Declare your root class with the BaseClass constructor.
+        return BaseClass({
             name: name,
             speak: function () {
                 console.log('Hi there!');
-            },
-            // Just add this one method to your base class and
-            // you're all set up! Simple as can be!
-            extend: BaseClass
-        };
+            }
+        });
     };
     var Dog = function (name) {
         return Pet(name).extend({
@@ -43,8 +46,19 @@ This inheritance chain can continue on as deep as you want it to be. To reach de
 chain, just use the `.base` notation. For example if you want data from two levels deep, that
 would look like `child.base.base.data`.
 
-Since all properties are brought over to each child, your will always have access to an `extend`
+Since all properties are brought over to each child, children will always have access to an `extend`
 method to create more children.
+
+#### this.base
+Any child can access its parent with the `base` property. This is provided automatically to
+each child and works in the same way as Java's `super` keyword.
+
+#### this.leaf
+Sometimes a parent needs to access its children. In classical languages this is when type
+casting comes into play, but we don't have that in JavaScript. Instead any parent can
+access its leaf-most child with the `leaf` attribute. This is provided automatically at
+every level of inheritance - meaning that even the top child will have a `leaf`
+property pointing to itself.
 
 ## BaseClass.Abstract
 If you want your base class to enforce an override, you can use the `Abstract` method provided
@@ -52,12 +66,11 @@ from the BaseClass function. Simply drop it into place like this:
 
     // definition.js
     var Vehicle = function (model) {
-        return {
-            extend: BaseClass,
+        return BaseClass({
             model: model,
             // Drop it in like any other property.
             drive: BaseClass.Abstract
-        };
+        });
     };
     var Car = function (model) {
         return Vehicle(model).extend({
@@ -78,12 +91,11 @@ This can be done easily with the `Stub` method.
 
     // definition.js
     var Vehicle = function (model) {
-        return {
-            extend: BaseClass,
+        return BaseClass({
             model: model,
             // Drop it in like any other property.
             honk: BaseClass.Stub
-        };
+        });
     };
     var Car = function (model) {
         return Vehicle(model).extend({
@@ -97,6 +109,6 @@ This can be done easily with the `Stub` method.
     whip.honk(); // --> Nothing happens.
 
 ---------
-* See: http://cobbdb.github.io/baseclass/
+* See: http://cobbdb.github.io/baseclass
 * See: http://github.com/cobbdb/baseclass
 * License: MIT
