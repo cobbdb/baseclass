@@ -2,11 +2,10 @@ describe('Stub methods', function () {
     var Car, Vehicle;
     beforeEach(function () {
         Vehicle = function () {
-            return {
-                extend: BaseClass,
+            return BaseClass({
                 weight: '1000lbs',
                 drive: BaseClass.Stub
-            };
+            });
         };
     });
     it("don't throw without override", function () {

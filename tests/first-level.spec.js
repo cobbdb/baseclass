@@ -14,4 +14,13 @@ describe('First level inheritance', function () {
         var sub = Animal('NAme').extend();
         expect(sub.name).toEqual('NAme');
     });
+    it('exposes leaf attribute', function () {
+        var test = Animal('TSTname');
+        expect(test.leaf).toBeDefined();
+        expect(test.leaf.name).toEqual('TSTname');
+    });
+    it('does not contain base attribute', function () {
+        var test = Animal('TSTname');
+        expect(test.base).not.toBeDefined();
+    });
 });
