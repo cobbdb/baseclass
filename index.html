@@ -36,7 +36,7 @@
 
 <p>Lean yet robust JavaScript inheritance.</p>
 
-<pre><code>$ bower install baseclass
+<pre><code>$ bower install baseclassjs
 $ npm install baseclassjs
 </code></pre>
 
@@ -46,22 +46,25 @@ $ npm install baseclassjs
 such as Ember and even Fiber. Code in natural JavaScript but now with the power of simple
 inheritance.</p>
 
+<p>BaseClass is provided as a node and Browserify module, as well as a global function. You can
+pick whichever version you prefer. The node and Browserify module lives in:
+<code>dist/node/baseclass.min.js</code>, and the global function lives in <code>dist/bower/baseclass.min.js</code>.</p>
+
 <h2>
-<a name="baseclass--extend" class="anchor" href="#baseclass--extend"><span class="octicon octicon-link"></span></a>BaseClass &amp; extend()</h2>
+<a name="baseclass--extend" class="anchor" href="#baseclass--extend"><span class="octicon octicon-link"></span></a>BaseClass() &amp; extend()</h2>
 
 <p>Here's a quick example showing a typical class setup.</p>
 
 <pre><code>// class-definition.js
+var BaseClass = require('baseclassjs');
 var Pet = function (name) {
-    return {
+    // Declare your root class with the BaseClass constructor.
+    return BaseClass({
         name: name,
         speak: function () {
             console.log('Hi there!');
-        },
-        // Just add this one method to your base class and
-        // you're all set up! Simple as can be!
-        extend: BaseClass
-    };
+        }
+    });
 };
 var Dog = function (name) {
     return Pet(name).extend({
@@ -82,8 +85,23 @@ woofie.speak(); // --&gt; Hi there! I'm Woofie and I'm a grey dog.
 chain, just use the <code>.base</code> notation. For example if you want data from two levels deep, that
 would look like <code>child.base.base.data</code>.</p>
 
-<p>Since all properties are brought over to each child, your will always have access to an <code>extend</code>
+<p>Since all properties are brought over to each child, children will always have access to an <code>extend</code>
 method to create more children.</p>
+
+<h4>
+<a name="thisbase" class="anchor" href="#thisbase"><span class="octicon octicon-link"></span></a>this.base</h4>
+
+<p>Any child can access its parent with the <code>base</code> property. This is provided automatically to
+each child and works in the same way as Java's <code>super</code> keyword.</p>
+
+<h4>
+<a name="thisleaf" class="anchor" href="#thisleaf"><span class="octicon octicon-link"></span></a>this.leaf</h4>
+
+<p>Sometimes a parent needs to access its children. In classical languages this is when type
+casting comes into play, but we don't have that in JavaScript. Instead any parent can
+access its leaf-most child with the <code>leaf</code> attribute. This is provided automatically at
+every level of inheritance - meaning that even the top child will have a <code>leaf</code>
+property pointing to itself.</p>
 
 <h2>
 <a name="baseclassabstract" class="anchor" href="#baseclassabstract"><span class="octicon octicon-link"></span></a>BaseClass.Abstract</h2>
@@ -93,12 +111,11 @@ from the BaseClass function. Simply drop it into place like this:</p>
 
 <pre><code>// definition.js
 var Vehicle = function (model) {
-    return {
-        extend: BaseClass,
+    return BaseClass({
         model: model,
         // Drop it in like any other property.
         drive: BaseClass.Abstract
-    };
+    });
 };
 var Car = function (model) {
     return Vehicle(model).extend({
@@ -122,12 +139,11 @@ This can be done easily with the <code>Stub</code> method.</p>
 
 <pre><code>// definition.js
 var Vehicle = function (model) {
-    return {
-        extend: BaseClass,
+    return BaseClass({
         model: model,
         // Drop it in like any other property.
         honk: BaseClass.Stub
-    };
+    });
 };
 var Car = function (model) {
     return Vehicle(model).extend({
@@ -144,7 +160,7 @@ whip.honk(); // --&gt; Nothing happens.
 <hr>
 
 <ul>
-<li>See: <a href="http://cobbdb.github.io/baseclass/">http://cobbdb.github.io/baseclass/</a>
+<li>See: <a href="http://cobbdb.github.io/baseclass">http://cobbdb.github.io/baseclass</a>
 </li>
 <li>See: <a href="http://github.com/cobbdb/baseclass">http://github.com/cobbdb/baseclass</a>
 </li>
