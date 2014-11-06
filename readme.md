@@ -18,9 +18,9 @@ pick whichever version you prefer. The node and Browserify module lives in:
 Here's a quick example showing a typical class setup.
 
 ```javascript
-// class-definition.js
+// pet.js
 var BaseClass = require('baseclassjs');
-var Pet = function (name) {
+module.exports = function (name) {
     // Declare your root class with the BaseClass constructor.
     return BaseClass({
         name: name,
@@ -29,7 +29,11 @@ var Pet = function (name) {
         }
     });
 };
-var Dog = function (name) {
+```
+```javascript
+// dog.js
+var Pet = require('./pet.js');
+module.exports = function (name) {
     return Pet(name).extend({
         color: 'grey',
         speak: function () {
@@ -41,6 +45,7 @@ var Dog = function (name) {
 ```
 ```javascript
 // my-app.js
+var Dog = require('./dog.js');
 var woofie = Dog('Woofie');
 woofie.speak(); // --> Hi there! I'm Woofie and I'm a grey dog.
 ```
@@ -68,7 +73,7 @@ If you want your base class to enforce an override, you can use the `Abstract` m
 from the BaseClass function. Simply drop it into place like this:
 
 ```javascript
-// definition.js
+// vehicle.js
 var Vehicle = function (model) {
     return BaseClass({
         model: model,
@@ -76,6 +81,9 @@ var Vehicle = function (model) {
         drive: BaseClass.Abstract
     });
 };
+```
+```javascript
+// car.js
 var Car = function (model) {
     return Vehicle(model).extend({
         color: 'blue'
@@ -96,7 +104,7 @@ Sometimes you only want to reserve an attribute name to ensure that it's provide
 This can be done easily with the `Stub` method.
 
 ```javascript
-// definition.js
+// vehicle.js
 var Vehicle = function (model) {
     return BaseClass({
         model: model,
@@ -104,6 +112,9 @@ var Vehicle = function (model) {
         honk: BaseClass.Stub
     });
 };
+```
+```javascript
+// car.js
 var Car = function (model) {
     return Vehicle(model).extend({
         weight: '1000lbs'
@@ -126,7 +137,7 @@ interfaces.
 ```javascript
 // honkable.js
 var BaseClass = require('baseclassjs');
-module.export = BaseClass.Interface({
+module.exports = BaseClass.Interface({
     honk: function () {
         return 'beep beep';
     }
@@ -137,7 +148,7 @@ module.export = BaseClass.Interface({
 var Vehicle = require('./vehicle.js'),
     Honkable = require('./honkable.js'),
     Driveable = require('./driveable.js');
-module.export = function (model) {
+module.exports = function (model) {
     return Vehicle(model).extend({
         weight: '1000lbs'
     }).implement(
