@@ -31,7 +31,7 @@
       </header>
       <section>
         <h1>
-<a name="baseclass--" class="anchor" href="#baseclass--"><span class="octicon octicon-link"></span></a>BaseClass <a href="http://badge.fury.io/bo/baseclass"><img src="https://badge.fury.io/bo/baseclass.svg" alt="Bower version"></a> <a href="http://badge.fury.io/js/baseclassjs"><img src="https://badge.fury.io/js/baseclassjs.svg" alt="NPM version"></a>
+<a id="baseclass--" class="anchor" href="#baseclass--" aria-hidden="true"><span class="octicon octicon-link"></span></a>BaseClass <a href="http://badge.fury.io/bo/baseclass"><img src="https://badge.fury.io/bo/baseclass.svg" alt="Bower version"></a> <a href="http://badge.fury.io/js/baseclassjs"><img src="https://badge.fury.io/js/baseclassjs.svg" alt="NPM version"></a>
 </h1>
 
 <p>Lean yet robust JavaScript inheritance.</p>
@@ -51,35 +51,38 @@ pick whichever version you prefer. The node and Browserify module lives in:
 <code>dist/node/baseclass.min.js</code>, and the global function lives in <code>dist/bower/baseclass.min.js</code>.</p>
 
 <h2>
-<a name="baseclass--extend" class="anchor" href="#baseclass--extend"><span class="octicon octicon-link"></span></a>BaseClass() &amp; extend()</h2>
+<a id="baseclass--extend" class="anchor" href="#baseclass--extend" aria-hidden="true"><span class="octicon octicon-link"></span></a>BaseClass() &amp; extend()</h2>
 
 <p>Here's a quick example showing a typical class setup.</p>
 
-<pre><code>// class-definition.js
-var BaseClass = require('baseclassjs');
-var Pet = function (name) {
-    // Declare your root class with the BaseClass constructor.
-    return BaseClass({
-        name: name,
-        speak: function () {
-            console.log('Hi there!');
+<div class="highlight highlight-javascript"><pre><span class="c1">// pet.js</span>
+<span class="k">var</span> BaseClass <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'baseclassjs'</span>);
+<span class="no">module</span>.<span class="nf">exports</span> <span class="o">=</span> <span class="kt">function</span> (<span class="nv">name</span>) {
+    <span class="c1">// Declare your root class with the BaseClass constructor.</span>
+    <span class="k">return</span> BaseClass({
+        name<span class="o">:</span> name,
+        <span class="nf">speak</span>: <span class="kt">function</span> () {
+            <span class="nc">console</span><span class="nf">.log</span>(<span class="s1">'Hi there!'</span>);
         }
     });
-};
-var Dog = function (name) {
-    return Pet(name).extend({
-        color: 'grey',
-        speak: function () {
-            this.base.speak();
-            console.log("I'm " + name + " and I'm a "  + this.color + ' dog.');
-        }
-    });
-};
+};</pre></div>
 
-// my-app.js
-var woofie = Dog('Woofie');
-woofie.speak(); // --&gt; Hi there! I'm Woofie and I'm a grey dog.
-</code></pre>
+<div class="highlight highlight-javascript"><pre><span class="c1">// dog.js</span>
+<span class="k">var</span> Pet <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'./pet.js'</span>);
+<span class="no">module</span>.<span class="nf">exports</span> <span class="o">=</span> <span class="kt">function</span> (<span class="nv">name</span>) {
+    <span class="k">return</span> Pet(name).extend({
+        color<span class="o">:</span> <span class="s1">'grey'</span>,
+        <span class="nf">speak</span>: <span class="kt">function</span> () {
+            <span class="nb">this</span>.base.speak();
+            <span class="nc">console</span><span class="nf">.log</span>(<span class="s2">"I'm "</span> <span class="o">+</span> name <span class="o">+</span> <span class="s2">" and I'm a "</span>  <span class="o">+</span> <span class="nb">this</span>.<span class="no">color</span> <span class="o">+</span> <span class="s1">' dog.'</span>);
+        }
+    });
+};</pre></div>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// my-app.js</span>
+<span class="k">var</span> Dog <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'./dog.js'</span>);
+<span class="k">var</span> woofie <span class="o">=</span> Dog(<span class="s1">'Woofie'</span>);
+woofie.speak(); <span class="c1">// --&gt; Hi there! I'm Woofie and I'm a grey dog.</span></pre></div>
 
 <p>This inheritance chain can continue on as deep as you want it to be. To reach deeper into the
 chain, just use the <code>.base</code> notation. For example if you want data from two levels deep, that
@@ -89,13 +92,13 @@ would look like <code>child.base.base.data</code>.</p>
 method to create more children.</p>
 
 <h4>
-<a name="thisbase" class="anchor" href="#thisbase"><span class="octicon octicon-link"></span></a>this.base</h4>
+<a id="thisbase" class="anchor" href="#thisbase" aria-hidden="true"><span class="octicon octicon-link"></span></a>this.base</h4>
 
 <p>Any child can access its parent with the <code>base</code> property. This is provided automatically to
 each child and works in the same way as Java's <code>super</code> keyword.</p>
 
 <h4>
-<a name="thisleaf" class="anchor" href="#thisleaf"><span class="octicon octicon-link"></span></a>this.leaf</h4>
+<a id="thisleaf" class="anchor" href="#thisleaf" aria-hidden="true"><span class="octicon octicon-link"></span></a>this.leaf</h4>
 
 <p>Sometimes a parent needs to access its children. In classical languages this is when type
 casting comes into play, but we don't have that in JavaScript. Instead any parent can
@@ -104,58 +107,94 @@ every level of inheritance - meaning that even the top child will have a <code>l
 property pointing to itself.</p>
 
 <h2>
-<a name="baseclassabstract" class="anchor" href="#baseclassabstract"><span class="octicon octicon-link"></span></a>BaseClass.Abstract</h2>
+<a id="baseclassabstract" class="anchor" href="#baseclassabstract" aria-hidden="true"><span class="octicon octicon-link"></span></a>BaseClass.Abstract</h2>
 
 <p>If you want your base class to enforce an override, you can use the <code>Abstract</code> method provided
 from the BaseClass function. Simply drop it into place like this:</p>
 
-<pre><code>// definition.js
-var Vehicle = function (model) {
-    return BaseClass({
-        model: model,
-        // Drop it in like any other property.
-        drive: BaseClass.Abstract
+<div class="highlight highlight-javascript"><pre><span class="c1">// vehicle.js</span>
+<span class="k">var</span> <span class="nf">Vehicle</span> <span class="o">=</span> <span class="kt">function</span> (<span class="nv">model</span>) {
+    <span class="k">return</span> BaseClass({
+        model<span class="o">:</span> model,
+        <span class="c1">// Drop it in like any other property.</span>
+        drive<span class="o">:</span> BaseClass.Abstract
     });
-};
-var Car = function (model) {
-    return Vehicle(model).extend({
-        color: 'blue'
-        // Notice we did -not- override the drive() method.
-    });
-};
+};</pre></div>
 
-// my-app.js
-var whip = Car('Honda');
-whip.drive(); // --&gt; Throws JS Error!
-</code></pre>
+<div class="highlight highlight-javascript"><pre><span class="c1">// car.js</span>
+<span class="k">var</span> <span class="nf">Car</span> <span class="o">=</span> <span class="kt">function</span> (<span class="nv">model</span>) {
+    <span class="k">return</span> Vehicle(model).extend({
+        color<span class="o">:</span> <span class="s1">'blue'</span>
+        <span class="c1">// Notice we did -not- override the drive() method.</span>
+    });
+};</pre></div>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// my-app.js</span>
+<span class="k">var</span> whip <span class="o">=</span> Car(<span class="s1">'Honda'</span>);
+whip.drive(); <span class="c1">// --&gt; Throws JS Error!</span></pre></div>
 
 <p>Calling an abstract method that has not been overridden will result in a JS Error being thrown.</p>
 
 <h2>
-<a name="baseclassstub" class="anchor" href="#baseclassstub"><span class="octicon octicon-link"></span></a>BaseClass.Stub</h2>
+<a id="baseclassstub" class="anchor" href="#baseclassstub" aria-hidden="true"><span class="octicon octicon-link"></span></a>BaseClass.Stub</h2>
 
 <p>Sometimes you only want to reserve an attribute name to ensure that it's provided to all children.
 This can be done easily with the <code>Stub</code> method.</p>
 
-<pre><code>// definition.js
-var Vehicle = function (model) {
-    return BaseClass({
-        model: model,
-        // Drop it in like any other property.
-        honk: BaseClass.Stub
+<div class="highlight highlight-javascript"><pre><span class="c1">// vehicle.js</span>
+<span class="k">var</span> <span class="nf">Vehicle</span> <span class="o">=</span> <span class="kt">function</span> (<span class="nv">model</span>) {
+    <span class="k">return</span> BaseClass({
+        model<span class="o">:</span> model,
+        <span class="c1">// Drop it in like any other property.</span>
+        honk<span class="o">:</span> BaseClass.Stub
     });
-};
-var Car = function (model) {
-    return Vehicle(model).extend({
-        weight: '1000lbs'
-        // Notice we did -not- override the honk() method.
-    });
-};
+};</pre></div>
 
-// my-app.js
-var whip = Car('Honda');
-whip.honk(); // --&gt; Nothing happens.
-</code></pre>
+<div class="highlight highlight-javascript"><pre><span class="c1">// car.js</span>
+<span class="k">var</span> <span class="nf">Car</span> <span class="o">=</span> <span class="kt">function</span> (<span class="nv">model</span>) {
+    <span class="k">return</span> Vehicle(model).extend({
+        weight<span class="o">:</span> <span class="s1">'1000lbs'</span>
+        <span class="c1">// Notice we did -not- override the honk() method.</span>
+    });
+};</pre></div>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// my-app.js</span>
+<span class="k">var</span> whip <span class="o">=</span> Car(<span class="s1">'Honda'</span>);
+whip.honk(); <span class="c1">// --&gt; Nothing happens.</span></pre></div>
+
+<h2>
+<a id="baseclassinterface--implement" class="anchor" href="#baseclassinterface--implement" aria-hidden="true"><span class="octicon octicon-link"></span></a>BaseClass.Interface() &amp; implement()</h2>
+
+<p>If you only want to attach attributes without changing an
+object's type, you can define an <code>Interface</code>. All children
+contain an <code>implement()</code> method used to attach one or more
+interfaces.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// honkable.js</span>
+<span class="k">var</span> BaseClass <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'baseclassjs'</span>);
+<span class="nv">module</span>.exports <span class="o">=</span> BaseClass.Interface({
+    <span class="nf">honk</span>: <span class="kt">function</span> () {
+        <span class="k">return</span> <span class="s1">'beep beep'</span>;
+    }
+});</pre></div>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// car.js</span>
+<span class="k">var</span> Vehicle <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'./vehicle.js'</span>),
+    Honkable <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'./honkable.js'</span>),
+    Driveable <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'./driveable.js'</span>);
+<span class="no">module</span>.<span class="nf">exports</span> <span class="o">=</span> <span class="kt">function</span> (<span class="nv">model</span>) {
+    <span class="k">return</span> Vehicle(model).extend({
+        weight<span class="o">:</span> <span class="s1">'1000lbs'</span>
+    }).implement(
+        Honkable,
+        Driveable
+    );
+};</pre></div>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// myapp.js</span>
+<span class="k">var</span> Car <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'./cat.js'</span>);
+myride <span class="o">=</span> Car(<span class="s1">'honda'</span>);
+myride.honk(); <span class="c1">// --&gt; beep beep</span></pre></div>
 
 <hr>
 
