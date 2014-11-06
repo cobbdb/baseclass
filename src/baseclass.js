@@ -20,6 +20,13 @@ function BaseClass(root) {
         this.base = base;
         return this;
     };
+    root.implement = function () {
+        var i, len = arguments.length;
+        for (i = 0; i < len; i += 1) {
+            arguments[i](root);
+        }
+        return root;
+    };
     return root;
 }
 
@@ -28,3 +35,13 @@ BaseClass.Abstract = function () {
 };
  
 BaseClass.Stub = function () {};
+
+BaseClass.Interface = function (child) {
+    return function (root) {
+        var key;
+        for (key in child) {
+            root[key] = child[key];
+        }
+        return root;
+    };
+};
