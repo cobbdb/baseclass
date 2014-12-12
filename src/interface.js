@@ -1,7 +1,9 @@
-var _ = require('lodash.assign');
-
 module.exports = function (child) {
     return function (root) {
-        return _(root, child);
+        var key;
+        for (key in child) {
+            root[key] = child[key];
+        }
+        return root;
     };
 };

@@ -29,13 +29,17 @@ describe('Third level inheritance', function () {
         expect(test.base.bye()).toEqual('Animal Test Message', 'base test');
         expect(test.base.cry()).toEqual('boo hoo');
     });
-    it('binds fields dynamically downward', function () {
+    it('has correct number of base fields', function () {
+        expect(test.base).toBeDefined();
+        expect(test.base.base).toBeDefined();
+        expect(test.base.base.base).not.toBeDefined();
+    });
+    xit('binds fields dynamically downward', function () {
         expect(test.weight).toEqual('50lbs', 'leaf');
         expect(test.base.weight).toEqual('50lbs', 'base');
         test.weight = '321lbs';
         expect(test.base.weight).toEqual('321lbs');
     });
-    // Maybe someday figure this out.
     xit('binds fields dynamically upward', function () {
         expect(test.weight).toEqual('50lbs', 'leaf');
         expect(test.base.weight).toEqual('50lbs', 'base');

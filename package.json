@@ -1,6 +1,6 @@
 {
   "name": "baseclassjs",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Lean yet robust JavaScript inheritance.",
   "main": "src/baseclass.js",
   "scripts": {
@@ -37,7 +37,5 @@
     "jasmine-node": "^1.14.5",
     "matchdep": "^0.3.0"
   },
-  "dependencies": {
-    "lodash.assign": "^2.4.1"
-  }
+  "dependencies": {}
 }

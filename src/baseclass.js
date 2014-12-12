@@ -1,29 +1,30 @@
-var Clone = require('./clone.js'),
-    _ = require('lodash.assign');
-
 function contructor(root) {
     root.leaf = root;
 
     root.extend = function (child) {
-        var key, base;
+        var key,
+            base = {};
         child = child || {};
 
         // Create a new base object.
-        base = Clone(root);
-        for (key in root) {
-            if (root.hasOwnProperty(key)) {
-                if (typeof root[key] === 'function') {
-                    // Rebind `this` to correct inheritance level.
-                    base[key] = root[key].bind(base);
-                }
+        for (key in this) {
+            if (typeof this[key] === 'function') {
+                base[key] = this[key].bind(base);
+            } else {
+                base[key] = this[key];
             }
         }
 
         // Update self with child's attributes.
-        root = _(root, child);
-        root.base = base;
+        for (key in child) {
+            this[key] = child[key];
+            if (typeof child[key] !== 'function') {
+                base[key] = child[key];
+            }
+        }
 
-        return root;
+        this.base = base;
+        return this;
     };
 
     root.implement = function () {
