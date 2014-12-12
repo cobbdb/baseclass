@@ -1,21 +1,11 @@
 module.exports = function (grunt) {
     grunt.config.merge({
         uglify: {
-            'build-bower': {
+            global: {
                 files: {
-                    'dist/bower/baseclass.min.js': [
-                        'src/baseclass.js'
+                    'dist/baseclass.min.js': [
+                        'bin/baseclass.js'
                     ]
-                }
-            },
-            'build-node': {
-                files: {
-                    'dist/node/baseclass.min.js': [
-                        'src/*.js'
-                    ]
-                },
-                options: {
-                    enclose: {}
                 }
             }
         }

@@ -1,3 +1,5 @@
+var BaseClass = require('../src/baseclass.js');
+
 describe('Stub methods', function () {
     var Car, Vehicle;
     beforeEach(function () {

@@ -1,8 +1,9 @@
+var Setup = require('./helpers/class.helper.js');
+
 describe('Second level inheritance', function () {
     var test;
     beforeEach(function () {
-        setupPet();
-        test = Pet('TSTname');
+        test = Setup.Pet('TSTname');
     });
     it('exposes root properties', function () {
         expect(test.name).toEqual('TSTname', 'name');

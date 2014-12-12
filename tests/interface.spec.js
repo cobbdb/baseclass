@@ -1,3 +1,6 @@
+var BaseClass = require('../src/baseclass.js'),
+    Setup = require('./helpers/class.helper.js');
+
 describe('Interface constructor', function () {
     var test,
         tstIFace1 = BaseClass.Interface({
@@ -12,10 +15,9 @@ describe('Interface constructor', function () {
             },
             iface3: 'abc123'
         });
-    setupPet();
 
     beforeEach(function () {
-        test = Pet('TSTname');
+        test = Setup.Pet('TSTname');
     });
     it('attaches child attributes', function () {
         test.implement(tstIFace1);

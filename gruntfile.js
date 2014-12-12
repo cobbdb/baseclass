@@ -6,14 +6,13 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
     grunt.registerTask('default', 'Full build suite.', [
-        'jasmine:src',
         'jshint',
+        'browserify',
         'uglify',
-        'jasmine:dist',
-        'exec:test-import'
+        'jasmine'
     ]);
     grunt.registerTask('test', 'Run all unit tests.', [
-        'jasmine',
-        'exec:test-import'
+        'browserify',
+        'jasmine'
     ]);
 };

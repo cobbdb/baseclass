@@ -1,8 +1,9 @@
+var Setup = require('./helpers/class.helper.js');
+
 describe('Third level inheritance', function () {
     var test;
     beforeEach(function () {
-        setupDog();
-        test = Dog();
+        test = Setup.Dog();
     });
     it('exposes root properties', function () {
         expect(test.name).toEqual('Wolfie', 'name');
@@ -27,5 +28,18 @@ describe('Third level inheritance', function () {
         expect(test.base.greet()).toEqual('Dog test message', 'leaf test');
         expect(test.base.bye()).toEqual('Animal Test Message', 'base test');
         expect(test.base.cry()).toEqual('boo hoo');
+    });
+    it('binds fields dynamically downward', function () {
+        expect(test.weight).toEqual('50lbs', 'leaf');
+        expect(test.base.weight).toEqual('50lbs', 'base');
+        test.weight = '321lbs';
+        expect(test.base.weight).toEqual('321lbs');
+    });
+    // Maybe someday figure this out.
+    xit('binds fields dynamically upward', function () {
+        expect(test.weight).toEqual('50lbs', 'leaf');
+        expect(test.base.weight).toEqual('50lbs', 'base');
+        test.base.weight = '321lbs';
+        expect(test.weight).toEqual('321lbs');
     });
 });

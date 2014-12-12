@@ -1,3 +1,6 @@
+var Setup = require('./helpers/class.helper.js'),
+    BaseClass = require('../src/baseclass.js');
+
 describe('Abstract methods', function () {
     var Car, Vehicle;
     beforeEach(function () {

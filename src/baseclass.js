@@ -1,25 +1,31 @@
-function BaseClass(root) {
+var Clone = require('./clone.js'),
+    _ = require('lodash.assign');
+
+function contructor(root) {
     root.leaf = root;
+
     root.extend = function (child) {
-        var key,
-            base = {};
+        var key, base;
         child = child || {};
-        for (key in this) {
-            if (typeof this[key] === 'function') {
-                base[key] = this[key].bind(base);
-            } else {
-                base[key] = this[key];
+
+        // Create a new base object.
+        base = Clone(root);
+        for (key in root) {
+            if (root.hasOwnProperty(key)) {
+                if (typeof root[key] === 'function') {
+                    // Rebind `this` to correct inheritance level.
+                    base[key] = root[key].bind(base);
+                }
             }
         }
-        for (key in child) {
-            this[key] = child[key];
-            if (typeof child[key] !== 'function') {
-                base[key] = child[key];
-            }
-        }
-        this.base = base;
-        return this;
+
+        // Update self with child's attributes.
+        root = _(root, child);
+        root.base = base;
+
+        return root;
     };
+
     root.implement = function () {
         var i, len = arguments.length;
         for (i = 0; i < len; i += 1) {
@@ -27,21 +33,12 @@ function BaseClass(root) {
         }
         return root;
     };
+
     return root;
 }
 
-BaseClass.Abstract = function () {
-    throw Error('[BaseClass] Abstract method was called without definition.');
-};
- 
-BaseClass.Stub = function () {};
+contructor.Abstract = require('./abstract.js');
+contructor.Stub = require('./stub.js');
+contructor.Interface = require('./interface.js');
 
-BaseClass.Interface = function (child) {
-    return function (root) {
-        var key;
-        for (key in child) {
-            root[key] = child[key];
-        }
-        return root;
-    };
-};
+module.exports = contructor;

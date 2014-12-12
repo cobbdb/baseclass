@@ -1,6 +1,7 @@
-var Animal, Pet, Dog;
-var setupAnimal = function () {
-    Animal = function (name) {
+var BaseClass = require('../../src/baseclass.js');
+
+module.exports = {
+    Animal: function (name) {
         return BaseClass({
             name: name,
             weight: '100lbs',
@@ -8,12 +9,9 @@ var setupAnimal = function () {
                 return 'Animal Test Message';
             }
         });
-    };
-};
-var setupPet = function () {
-    setupAnimal();
-    Pet = function (name) {
-        return Animal(name).extend({
+    },
+    Pet: function (name) {
+        return this.Animal(name).extend({
             color: 'Gray',
             weight: '50lbs',
             greet: function () {
@@ -29,12 +27,9 @@ var setupPet = function () {
                 return 'boo hoo';
             }
         });
-    };
-};
-var setupDog = function () {
-    setupPet();
-    Dog = function () {
-        return Pet('Wolfie').extend({
+    },
+    Dog: function () {
+        return this.Pet('Wolfie').extend({
             speak: function () {
                 return 'Dog test message';
             },
@@ -42,5 +37,5 @@ var setupDog = function () {
                 return 'ERROR';
             }
         });
-    };
+    }
 };

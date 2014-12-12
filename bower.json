@@ -1,14 +1,14 @@
 {
   "name": "baseclass",
-  "version": "1.0.0",
   "homepage": "https://github.com/cobbdb/baseclass",
   "authors": [
     "cobbdb <cobbdb@gmail.com>"
   ],
   "description": "Lean yet robust JavaScript inheritance.",
-  "main": "dist/bower/baseclass.min.js",
+  "main": "dist/baseclass.min.js",
   "moduleType": [
-    "globals"
+    "globals",
+    "node"
   ],
   "keywords": [
     "inheritance",
