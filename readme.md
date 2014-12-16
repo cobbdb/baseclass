@@ -6,13 +6,14 @@ Lean yet robust JavaScript inheritance.
     $ npm install baseclassjs
 
 -------------
-BaseClass is an alternative to many of the overbearing and intrusive inheritance libraries
-such as Ember and even Fiber. Code in natural JavaScript but now with the power of simple
-inheritance.
+BaseClass is a fast, lightweight, and non-intrusive inheritance
+library. Code in natural JavaScript but now with the power of
+simple inheritance.
 
-BaseClass is provided as a node and Browserify module, as well as a global function. You can
-pick whichever version you prefer. The node and Browserify module lives in:
-`dist/node/baseclass.min.js`, and the global function lives in `dist/bower/baseclass.min.js`.
+BaseClass is provided as a CommonJS module, as well as a global function.
+You can pick whichever version you prefer. The global function lives
+in `dist/baseclass.min.js`, and the CommonJS module can be `require`'d
+after it is `npm install`'d.
 
 ## BaseClass() & extend()
 Here's a quick example showing a typical class setup.
@@ -24,6 +25,7 @@ module.exports = function (name) {
     // Declare your root class with the BaseClass constructor.
     return BaseClass({
         name: name,
+        color: 'grey',
         speak: function () {
             console.log('Hi there!');
         }
@@ -35,9 +37,9 @@ module.exports = function (name) {
 var Pet = require('./pet.js');
 module.exports = function (name) {
     return Pet(name).extend({
-        color: 'grey',
-        speak: function () {
-            this.base.speak();
+        // The 'base' parameter is provided to access a parent's methods.
+        speak: function (base) {
+            base.speak();
             console.log("I'm " + name + " and I'm a "  + this.color + ' dog.');
         }
     });
@@ -45,63 +47,104 @@ module.exports = function (name) {
 ```
 ```javascript
 // my-app.js
-var Dog = require('./dog.js');
-var woofie = Dog('Woofie');
+var Dog = require('./dog.js'),
+    woofie = Dog('Woofie');
 woofie.speak(); // --> Hi there! I'm Woofie and I'm a grey dog.
 ```
 
-This inheritance chain can continue on as deep as you want it to be. To reach deeper into the
-chain, just use the `.base` notation. For example if you want data from two levels deep, that
-would look like `child.base.base.data`.
+This inheritance chain can continue on as deep as you want it to be. To
+reach deeper into the chain, just use the `.base` notation. For example
+if you want data from two levels deep, that would look
+like `child.base.base.data`.
 
-Since all properties are brought over to each child, children will always have access to an `extend`
-method to create more children.
+Since all properties are brought over to each child, children will always
+have access to an `extend` method to create more children.
 
-#### this.base
-Any child can access its parent with the `base` property. This is provided automatically to
-each child and works in the same way as Java's `super` keyword.
+#### base & self
+Any child can access its parent with the `base` parameter. This is provided
+automatically to each child method and works in the same way as Java's
+`super` keyword.
 
-#### this.leaf
-Sometimes a parent needs to access its children. In classical languages this is when type
-casting comes into play, but we don't have that in JavaScript. Instead any parent can
-access its leaf-most child with the `leaf` attribute. This is provided automatically at
-every level of inheritance - meaning that even the top child will have a `leaf`
-property pointing to itself.
+Likewise, since the `this` keyword always points at the leaf-most child,
+parents can access themselves with the provided `self` parameter.
 
-## BaseClass.Abstract
-If you want your base class to enforce an override, you can use the `Abstract` method provided
-from the BaseClass function. Simply drop it into place like this:
+Child method signatures are altered by appending `base` and `self` in that
+order to the right of the parameter list.
+
+Here is an example using both `base` and `self`:
 
 ```javascript
-// vehicle.js
-var Vehicle = function (model) {
+function Machine() {
+    return BaseClass({
+        alarm: function () {
+            return 'alert:';
+        }
+    });
+}
+```
+```javascript
+function Vehicle() {
+    return Machine().extend({
+        honk: function () {
+            return 'beep beep';
+        },
+        alarm: function (msg, base, self) {
+            msg += base.alarm();
+            return msg + self.honk();
+        }
+    });
+}
+```
+```javascript
+function Car() {
+    return Vehicle().extend({
+        honk: function () {
+            return 'ahooooga';
+        }
+    });
+}
+```
+```javascript
+// my-app.js
+var mycar = Car('Honda');
+mycar.honk(); // --> ahooooga
+mycar.alarm('!>'); // --> !>alert:beep beep
+```
+
+## BaseClass.Abstract
+If you want your base class to enforce an override, you can use the
+`Abstract` method provided from the BaseClass function. Simply drop it into
+place like this:
+
+```javascript
+function Vehicle(model) {
     return BaseClass({
         model: model,
         // Drop it in like any other property.
         drive: BaseClass.Abstract
     });
-};
+}
 ```
 ```javascript
-// car.js
-var Car = function (model) {
+function Car(model) {
     return Vehicle(model).extend({
         color: 'blue'
         // Notice we did -not- override the drive() method.
     });
-};
+}
 ```
 ```javascript
 // my-app.js
-var whip = Car('Honda');
-whip.drive(); // --> Throws JS Error!
+var mycar = Car('Honda');
+mycar.drive(); // --> Throws JS Error!
 ```
 
-Calling an abstract method that has not been overridden will result in a JS Error being thrown.
+Calling an abstract method that has not been overridden will result in a
+JS Error being thrown.
 
 ## BaseClass.Stub
-Sometimes you only want to reserve an attribute name to ensure that it's provided to all children.
-This can be done easily with the `Stub` method.
+Sometimes you only want to reserve an attribute name to ensure that it's
+provided to all children. This can be done easily with the `Stub` method.
 
 ```javascript
 // vehicle.js

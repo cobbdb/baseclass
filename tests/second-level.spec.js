@@ -12,23 +12,20 @@ describe('Second level inheritance', function () {
         expect(test.color).toEqual('Gray', 'color');
     });
     it('exposes the extend() method', function () {
-        expect(test.extend).toBeDefined();
+        expect(typeof test.extend).toEqual('function');
     });
-    it('exposes leaf attribute', function () {
-        expect(test.leaf).toBeDefined();
-        expect(test.leaf.name).toEqual('TSTname');
-    });
-    it('exposes base attribute', function () {
+    it('exposes working `base`', function () {
         expect(test.base).toBeDefined();
-        expect(test.base.name).toEqual('TSTname');
+        expect(test.base.speak()).toEqual('Animal Test Message');
     });
-    it('retains leaf property values', function () {
-        expect(test.base.weight).toEqual('50lbs');
-        expect(test.base.color).toEqual('Gray');
-    });
-    it('binds this to 2nd level', function () {
+    it('provides working `base` and `self`', function () {
         expect(test.greet()).toEqual('Animal Test Message', 'leaf test');
         expect(test.bye()).toEqual('Animal Test Message', 'base test');
         expect(test.cry()).toEqual('boo hoo');
+    });
+    it('can mutate with `this`', function () {
+        expect(test.name).toEqual('TSTname', 'initial');
+        test.rename('new name');
+        expect(test.name).toEqual('new name', 'mutated');
     });
 });

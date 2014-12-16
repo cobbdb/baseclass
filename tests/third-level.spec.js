@@ -12,19 +12,14 @@ describe('Third level inheritance', function () {
         expect(test.color).toEqual('Gray', 'color');
     });
     it('exposes the extend() method', function () {
-        expect(test.extend).toBeDefined();
+        expect(typeof test.extend).toEqual('function');
     });
-    it('overrides root property values', function () {
-        expect(test.base.weight).toEqual('50lbs');
-        expect(test.base.color).toEqual('Gray', 'color');
-        expect(test.base.speak()).toEqual('Animal Test Message');
+    it('binds `base` to the correct level', function () {
+        expect(test.speak()).toEqual('Dog test message', 'dog');
+        expect(test.base.speak()).toEqual('Animal Test Message', 'pet');
+        expect(test.base.base.speak()).toEqual('Animal Test Message', 'animal');
     });
-    it('overrides second level property values', function () {
-        expect(test.base.base.weight).toEqual('50lbs');
-        expect(test.base.base.color).toEqual('Gray', 'color');
-        expect(test.base.base.speak()).toEqual('Animal Test Message');
-    });
-    it('binds base.this to 2nd level', function () {
+    it('provides working `base` and `self`', function () {
         expect(test.base.greet()).toEqual('Dog test message', 'leaf test');
         expect(test.base.bye()).toEqual('Animal Test Message', 'base test');
         expect(test.base.cry()).toEqual('boo hoo');
@@ -34,16 +29,9 @@ describe('Third level inheritance', function () {
         expect(test.base.base).toBeDefined();
         expect(test.base.base.base).not.toBeDefined();
     });
-    xit('binds fields dynamically downward', function () {
-        expect(test.weight).toEqual('50lbs', 'leaf');
-        expect(test.base.weight).toEqual('50lbs', 'base');
-        test.weight = '321lbs';
-        expect(test.base.weight).toEqual('321lbs');
-    });
-    xit('binds fields dynamically upward', function () {
-        expect(test.weight).toEqual('50lbs', 'leaf');
-        expect(test.base.weight).toEqual('50lbs', 'base');
-        test.base.weight = '321lbs';
-        expect(test.weight).toEqual('321lbs');
+    it('can mutate with `this`', function () {
+        expect(test.name).toEqual('Wolfie', 'initial');
+        test.rename('new name');
+        expect(test.name).toEqual('new name', 'mutated');
     });
 });

@@ -1,3 +1,5 @@
+var $ = require('curb');
+
 module.exports = function (grunt) {
     grunt.config.merge({
         jasmine: {
@@ -8,7 +10,9 @@ module.exports = function (grunt) {
                 }
             },
             modules: {
-                src: 'bin/tests/*.js'
+                src: $('bin/tests/%s.spec.js',
+                    grunt.option('spec') || '*'
+                )
             },
             options: {
                 display: 'full',

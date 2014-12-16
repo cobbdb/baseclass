@@ -1,30 +1,27 @@
-function contructor(root) {
-    root.leaf = root;
+var rebind = require('./rebind.js');
 
+function contructor(root) {
     root.extend = function (child) {
-        var key,
-            base = {};
+        var key, base = {
+            base: root.base
+        };
         child = child || {};
 
-        // Create a new base object.
-        for (key in this) {
-            if (typeof this[key] === 'function') {
-                base[key] = this[key].bind(base);
-            } else {
-                base[key] = this[key];
+        for (key in root) {
+            if (typeof root[key] === 'function') {
+                base[key] = root[key];
             }
         }
-
-        // Update self with child's attributes.
         for (key in child) {
-            this[key] = child[key];
-            if (typeof child[key] !== 'function') {
-                base[key] = child[key];
+            if (typeof child[key] === 'function') {
+                root[key] = rebind(key, root, base, child);
+            } else {
+                root[key] = child[key];
             }
         }
 
-        this.base = base;
-        return this;
+        root.base = base;
+        return root;
     };
 
     root.implement = function () {

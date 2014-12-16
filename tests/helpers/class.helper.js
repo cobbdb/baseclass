@@ -7,6 +7,9 @@ module.exports = {
             weight: '100lbs',
             speak: function () {
                 return 'Animal Test Message';
+            },
+            rename: function (name) {
+                this.name = name;
             }
         });
     },
@@ -15,13 +18,13 @@ module.exports = {
             color: 'Gray',
             weight: '50lbs',
             greet: function () {
-                return this.leaf.speak();
+                return this.speak();
             },
-            bye: function () {
-                return this.base.speak();
+            bye: function (base) {
+                return base.speak();
             },
-            cry: function () {
-                return this.getSadMsg();
+            cry: function (base, self) {
+                return self.getSadMsg();
             },
             getSadMsg: function () {
                 return 'boo hoo';

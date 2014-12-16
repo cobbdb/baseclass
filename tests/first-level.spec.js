@@ -15,13 +15,14 @@ describe('First level inheritance', function () {
         var sub = Setup.Animal('NAme').extend();
         expect(sub.name).toEqual('NAme');
     });
-    it('exposes leaf attribute', function () {
-        var test = Setup.Animal('TSTname');
-        expect(test.leaf).toBeDefined();
-        expect(test.leaf.name).toEqual('TSTname');
-    });
     it('does not contain base attribute', function () {
         var test = Setup.Animal('TSTname');
         expect(test.base).not.toBeDefined();
+    });
+    it('can mutate with `this`', function () {
+        var test = Setup.Animal('TSTname');
+        expect(test.name).toEqual('TSTname', 'initial');
+        test.rename('new name');
+        expect(test.name).toEqual('new name', 'mutated');
     });
 });
