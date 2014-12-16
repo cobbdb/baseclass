@@ -11,7 +11,7 @@ module.exports = {
             rename: function (name) {
                 this.name = name;
             },
-            get summary () {
+            summary: function () {
                 return this.name + ':' + this.weight;
             }
         });
@@ -31,6 +31,9 @@ module.exports = {
             },
             getSadMsg: function () {
                 return 'boo hoo';
+            },
+            summary: function (base) {
+                return base.summary();
             }
         });
     },

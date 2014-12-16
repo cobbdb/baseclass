@@ -9,7 +9,7 @@ function contructor(root) {
 
         for (key in root) {
             if (typeof root[key] === 'function') {
-                base[key] = root[key];
+                base[key] = root[key].bind(root);
             }
         }
         for (key in child) {
