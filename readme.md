@@ -106,7 +106,7 @@ function Car() {
 ```
 ```javascript
 // my-app.js
-var mycar = Car('Honda');
+var mycar = Car();
 mycar.honk(); // --> ahooooga
 mycar.alarm('!>'); // --> !>alert:beep beep
 ```
