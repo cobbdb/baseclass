@@ -10,6 +10,9 @@ module.exports = {
             },
             rename: function (name) {
                 this.name = name;
+            },
+            get summary () {
+                return this.name + ':' + this.weight;
             }
         });
     },

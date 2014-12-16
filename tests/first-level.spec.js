@@ -25,4 +25,8 @@ describe('First level inheritance', function () {
         test.rename('new name');
         expect(test.name).toEqual('new name', 'mutated');
     });
+    it('can access fields with `this`', function () {
+        var test = Setup.Animal('TSTname');
+        expect(test.summary).toEqual('TSTname:100lbs');
+    });
 });

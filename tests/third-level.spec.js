@@ -34,4 +34,7 @@ describe('Third level inheritance', function () {
         test.rename('new name');
         expect(test.name).toEqual('new name', 'mutated');
     });
+    it('can access fields with `this`', function () {
+        expect(test.summary).toEqual('Wolfie:50lbs');
+    });
 });
