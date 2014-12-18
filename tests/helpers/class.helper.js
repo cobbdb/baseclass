@@ -23,17 +23,17 @@ module.exports = {
             greet: function () {
                 return this.speak();
             },
-            bye: function (base) {
-                return base.speak();
+            bye: function () {
+                return this.base.speak();
             },
-            cry: function (base, self) {
-                return self.getSadMsg();
+            cry: function () {
+                return this.self.getSadMsg();
             },
             getSadMsg: function () {
                 return 'boo hoo';
             },
-            summary: function (base) {
-                return base.summary();
+            summary: function () {
+                return this.base.summary();
             }
         });
     },

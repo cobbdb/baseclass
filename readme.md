@@ -37,9 +37,9 @@ module.exports = function (name) {
 var Pet = require('./pet.js');
 module.exports = function (name) {
     return Pet(name).extend({
-        // The 'base' parameter is provided to access a parent's methods.
-        speak: function (base) {
-            base.speak();
+        // The 'this.base' object is used to access a parent's methods.
+        speak: function () {
+            this.base.speak();
             console.log("I'm " + name + " and I'm a "  + this.color + ' dog.');
         }
     });
@@ -60,24 +60,24 @@ like `child.base.base.data`.
 Since all properties are brought over to each child, children will always
 have access to an `extend` method to create more children.
 
-#### base & self
-Any child can access its parent with the `base` parameter. This is provided
-automatically to each child method and works in the same way as Java's
-`super` keyword.
+#### this.base & this.self
+Any child can access its parent's methods with the `this.base` object.
+This is provided automatically to each child method and works in the
+same way as Java's `super` keyword.
 
 Likewise, since the `this` keyword always points at the leaf-most child,
-parents can access themselves with the provided `self` parameter.
+parents can access themselves with the `this.self` object. `this.self` is
+intended for those rare situations when your code does not want to run the
+leaf-most override of a function, but rather the function at its own
+inheritance level.
 
-Child method signatures are altered by appending `base` and `self` in that
-order to the right of the parameter list.
-
-Here is an example using both `base` and `self`:
+Here is an example using both `this.base` and `this.self`:
 
 ```javascript
 function Machine() {
     return BaseClass({
         alarm: function () {
-            return 'alert:';
+            return 'alert: ';
         }
     });
 }
@@ -88,9 +88,9 @@ function Vehicle() {
         honk: function () {
             return 'beep beep';
         },
-        alarm: function (msg, base, self) {
-            msg += base.alarm();
-            return msg + self.honk();
+        alarm: function (msg) {
+            msg += this.base.alarm();
+            return msg + this.self.honk();
         }
     });
 }
@@ -107,8 +107,8 @@ function Car() {
 ```javascript
 // my-app.js
 var mycar = Car();
-mycar.honk(); // --> ahooooga
-mycar.alarm('!>'); // --> !>alert:beep beep
+console.log(mycar.honk()); // --> ahooooga
+console.log(mycar.alarm('!> ')); // --> !> alert: beep beep
 ```
 
 ## BaseClass.Abstract
@@ -203,8 +203,8 @@ module.exports = function (model) {
 ```javascript
 // myapp.js
 var Car = require('./cat.js');
-myride = Car('honda');
-myride.honk(); // --> beep beep
+mycar = Car('honda');
+mycar.honk(); // --> beep beep
 ```
 
 ---------
