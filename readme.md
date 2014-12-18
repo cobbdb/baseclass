@@ -5,6 +5,8 @@ Lean yet robust JavaScript inheritance.
     $ bower install baseclassjs
     $ npm install baseclassjs
 
+[![NPM info](https://nodei.co/npm/baseclassjs.png?stars=true&downloads=true)](https://nodei.co/npm-dl/baseclassjs/)[![NPM downloads](https://nodei.co/npm-dl/baseclassjs.png?months=6&height=2)](https://nodei.co/npm-dl/baseclassjs/)
+
 -------------
 BaseClass is a fast, lightweight, and non-intrusive inheritance
 library. Code in natural JavaScript but now with the power of
