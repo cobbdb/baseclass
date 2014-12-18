@@ -73,9 +73,9 @@ after it is <code>npm install</code>'d.</p>
 <span class="pl-s">var</span> Pet <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>./pet.js<span class="pl-pds">'</span></span>);
 <span class="pl-s3">module</span>.<span class="pl-en">exports</span> <span class="pl-k">=</span> <span class="pl-st">function</span> (<span class="pl-vpf">name</span>) {
     <span class="pl-k">return</span> Pet(name).extend({
-        <span class="pl-c">// The 'base' parameter is provided to access a parent's methods.</span>
-        <span class="pl-en">speak</span>: <span class="pl-st">function</span> (<span class="pl-vpf">base</span>) {
-            base.speak();
+        <span class="pl-c">// The 'this.base' object is used to access a parent's methods.</span>
+        <span class="pl-en">speak</span>: <span class="pl-st">function</span> () {
+            <span class="pl-v">this</span>.base.speak();
             <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">"</span>I'm <span class="pl-pds">"</span></span> <span class="pl-k">+</span> name <span class="pl-k">+</span> <span class="pl-s1"><span class="pl-pds">"</span> and I'm a <span class="pl-pds">"</span></span>  <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-sc">color</span> <span class="pl-k">+</span> <span class="pl-s1"><span class="pl-pds">'</span> dog.<span class="pl-pds">'</span></span>);
         }
     });
@@ -95,24 +95,24 @@ like <code>child.base.base.data</code>.</p>
 have access to an <code>extend</code> method to create more children.</p>
 
 <h4>
-<a id="base--self" class="anchor" href="#base--self" aria-hidden="true"><span class="octicon octicon-link"></span></a>base &amp; self</h4>
+<a id="thisbase--thisself" class="anchor" href="#thisbase--thisself" aria-hidden="true"><span class="octicon octicon-link"></span></a>this.base &amp; this.self</h4>
 
-<p>Any child can access its parent with the <code>base</code> parameter. This is provided
-automatically to each child method and works in the same way as Java's
-<code>super</code> keyword.</p>
+<p>Any child can access its parent's methods with the <code>this.base</code> object.
+This is provided automatically to each child method and works in the
+same way as Java's <code>super</code> keyword.</p>
 
 <p>Likewise, since the <code>this</code> keyword always points at the leaf-most child,
-parents can access themselves with the provided <code>self</code> parameter.</p>
+parents can access themselves with the <code>this.self</code> object. <code>this.self</code> is
+intended for those rare situations when your code does not want to run the
+leaf-most override of a function, but rather the function at its own
+inheritance level.</p>
 
-<p>Child method signatures are altered by appending <code>base</code> and <code>self</code> in that
-order to the right of the parameter list.</p>
-
-<p>Here is an example using both <code>base</code> and <code>self</code>:</p>
+<p>Here is an example using both <code>this.base</code> and <code>this.self</code>:</p>
 
 <div class="highlight highlight-javascript"><pre><span class="pl-st">function</span> <span class="pl-en">Machine</span>() {
     <span class="pl-k">return</span> BaseClass({
         <span class="pl-en">alarm</span>: <span class="pl-st">function</span> () {
-            <span class="pl-k">return</span> <span class="pl-s1"><span class="pl-pds">'</span>alert:<span class="pl-pds">'</span></span>;
+            <span class="pl-k">return</span> <span class="pl-s1"><span class="pl-pds">'</span>alert: <span class="pl-pds">'</span></span>;
         }
     });
 }</pre></div>
@@ -122,9 +122,9 @@ order to the right of the parameter list.</p>
         <span class="pl-en">honk</span>: <span class="pl-st">function</span> () {
             <span class="pl-k">return</span> <span class="pl-s1"><span class="pl-pds">'</span>beep beep<span class="pl-pds">'</span></span>;
         },
-        <span class="pl-en">alarm</span>: <span class="pl-st">function</span> (<span class="pl-vpf">msg</span>, <span class="pl-vpf">base</span>, <span class="pl-vpf">self</span>) {
-            msg <span class="pl-k">+=</span> base.alarm();
-            <span class="pl-k">return</span> msg <span class="pl-k">+</span> self.honk();
+        <span class="pl-en">alarm</span>: <span class="pl-st">function</span> (<span class="pl-vpf">msg</span>) {
+            msg <span class="pl-k">+=</span> <span class="pl-v">this</span>.base.alarm();
+            <span class="pl-k">return</span> msg <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-sc">self</span>.honk();
         }
     });
 }</pre></div>
@@ -138,9 +138,9 @@ order to the right of the parameter list.</p>
 }</pre></div>
 
 <div class="highlight highlight-javascript"><pre><span class="pl-c">// my-app.js</span>
-<span class="pl-s">var</span> mycar <span class="pl-k">=</span> Car(<span class="pl-s1"><span class="pl-pds">'</span>Honda<span class="pl-pds">'</span></span>);
-mycar.honk(); <span class="pl-c">// --&gt; ahooooga</span>
-mycar.alarm(<span class="pl-s1"><span class="pl-pds">'</span>!&gt;<span class="pl-pds">'</span></span>); <span class="pl-c">// --&gt; !&gt;alert:beep beep</span></pre></div>
+<span class="pl-s">var</span> mycar <span class="pl-k">=</span> Car();
+<span class="pl-en">console</span><span class="pl-s3">.log</span>(mycar.honk()); <span class="pl-c">// --&gt; ahooooga</span>
+<span class="pl-en">console</span><span class="pl-s3">.log</span>(mycar.alarm(<span class="pl-s1"><span class="pl-pds">'</span>!&gt; <span class="pl-pds">'</span></span>)); <span class="pl-c">// --&gt; !&gt; alert: beep beep</span></pre></div>
 
 <h2>
 <a id="baseclassabstract" class="anchor" href="#baseclassabstract" aria-hidden="true"><span class="octicon octicon-link"></span></a>BaseClass.Abstract</h2>
@@ -229,8 +229,8 @@ interfaces.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="pl-c">// myapp.js</span>
 <span class="pl-s">var</span> Car <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>./cat.js<span class="pl-pds">'</span></span>);
-myride <span class="pl-k">=</span> Car(<span class="pl-s1"><span class="pl-pds">'</span>honda<span class="pl-pds">'</span></span>);
-myride.honk(); <span class="pl-c">// --&gt; beep beep</span></pre></div>
+mycar <span class="pl-k">=</span> Car(<span class="pl-s1"><span class="pl-pds">'</span>honda<span class="pl-pds">'</span></span>);
+mycar.honk(); <span class="pl-c">// --&gt; beep beep</span></pre></div>
 
 <hr>
 
