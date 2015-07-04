@@ -62,6 +62,24 @@ like `child.base.base.data`.
 Since all properties are brought over to each child, children will always
 have access to an `extend` method to create more children.
 
+#### _create method
+All levels of the inheritance chain are assigned a `_create` method. This
+method is stubbed when not explicitly defined. The `_create` method is
+a callback that executes after the root parent is created and again after
+each child is extended. The `this` object is bound to the newly setup
+instance. Here is an example of populating a custom data-structure after
+it has been newly created.
+```javascript
+// Where MyCollection provides an add() method.
+module.exports = function () {
+    return MyCollection().extend({
+        _create: function () {
+            this.add([1, 2, 3, 4]);
+        }
+    });
+};
+```
+
 #### this.base & this.self
 Any child can access its parent's methods with the `this.base` object.
 This is provided automatically to each child method and works in the
