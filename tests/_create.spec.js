@@ -15,7 +15,7 @@ describe('Creation logic', function () {
         });
         expect(count).toEqual(1);
         var TestChild = TestParent.extend();
-        expect(count).toEqual(2);
+        expect(count).toEqual(1);
     });
     it('can be overridden', function () {
         var count = 0;
@@ -26,7 +26,15 @@ describe('Creation logic', function () {
         });
         expect(count).toEqual(1);
         var TestChild = TestParent.extend({
-            _create: function () {}
+            _create: function () {
+                count -= 1;
+            }
+        });
+        expect(count).toEqual(0);
+        var TestGrandchild = TestChild.extend({
+            _create: function () {
+                count += 1;
+            }
         });
         expect(count).toEqual(1);
     });

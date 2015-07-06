@@ -39,7 +39,11 @@ function contructor(root) {
         root.base = base;
 
         // Execute any construction logic.
-        root._create.call(root);
+        if ('_create' in child) {
+            root._create();
+        } else {
+            root._create = Stub;
+        }
 
         return root;
     };
