@@ -5,6 +5,9 @@
         },
         applyname: function () {
             this.setname.apply(this, arguments);
+        },
+        callname: function (arg1, arg2, arg3, arg4, arg5, arg6) {
+            this.setname.call(this, arg1, arg2, arg3, arg4, arg5, arg6);
         }
     };
 
@@ -34,6 +37,9 @@ module.exports = {
         },
         callname: function () {
             thing.setname.call(thing, 'bob');
+        },
+        callnameWargs: function () {
+            thing.callname('bob');
         }
     },
 };

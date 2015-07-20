@@ -16,14 +16,14 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('perf-report', function () {
-        var test, currentBest, nirvanaWorst, diff,
-            score = '',
+        var test, currentBest, nirvanaWorst, diff, score,
             log = {};
 
         for (test in stats.nirvana) {
             currentBest = stats.current[test].hz * (1 - stats.current[test].rme / 100);
             nirvanaWorst = stats.nirvana[test].hz * (1 + stats.nirvana[test].rme / 100);
             diff = Math.round(-(currentBest - nirvanaWorst) / nirvanaWorst * 100);
+            score = '';
             if (test in bench) {
                 score = diff - bench[test];
                 score = $(' (%s%)', score);
