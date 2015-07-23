@@ -17,6 +17,13 @@ You can pick whichever version you prefer. The global function lives
 in `dist/baseclass.min.js`, and the CommonJS module can be `require`'d
 after it is `npm install`'d.
 
+Every release, performance data is gathered and graphed to ensure every
+version of the library is blazing fast.
+* Creation: https://plot.ly/~cobbdb/69/baseclass-create/
+* Extension: https://plot.ly/~cobbdb/74/baseclass-extend/
+* Method calls: https://plot.ly/~cobbdb/72/baseclass-use/
+* Parent method calls: https://plot.ly/~cobbdb/68/baseclass-base/
+
 ## BaseClass() & extend()
 Here's a quick example showing a typical class setup.
 

@@ -30,7 +30,6 @@ var steve = Man('steve', 33);
 module.exports = suite.
     on('start', function (event) {
         stats[event.currentTarget.name] = {};
-
         console.log('Testing ' + event.currentTarget.name);
     }).
     on('cycle', function (event) {
@@ -49,23 +48,23 @@ module.exports = suite.
         fn: function () {
             var mary = Person('mary', 28);
         },
-        minSamples: 500
+        //minSamples: 500
     }).
     add('extend', {
         fn: function () {
             var bob = Man('bob', 29);
         },
-        minSamples: 1000
+        //minSamples: 1000
     }).
     add('use', {
         fn: function () {
             steve.bye();
         },
-        minSamples: 1000
+        //minSamples: 1000
     }).
     add('base', {
         fn: function () {
             steve.greet2();
         },
-        minSamples: 400
+        //minSamples: 400
     });

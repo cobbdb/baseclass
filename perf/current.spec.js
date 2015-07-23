@@ -50,23 +50,23 @@ module.exports = suite.
         fn: function () {
             var mary = Person('mary', 28);
         },
-        minSamples: 1000
+        //minSamples: 1000
     }).
     add('extend', {
         fn: function () {
             var bob = Man('bob', 29);
         },
-        minSamples: 1000
+        //minSamples: 1000
     }).
     add('use', {
         fn: function () {
             steve.bye();
         },
-        minSamples: 1000
+        //minSamples: 1000
     }).
     add('base', {
         fn: function () {
             steve.greet();
         },
-        minSamples: 1000
+        //minSamples: 1000
     });
