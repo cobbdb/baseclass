@@ -1,6 +1,6 @@
 {
   "name": "baseclassjs",
-  "version": "3.0.0",
+  "version": "3.1.1",
   "description": "Lean yet robust JavaScript inheritance.",
   "main": "src/baseclass.js",
   "scripts": {
@@ -28,9 +28,9 @@
   },
   "homepage": "https://github.com/cobbdb/baseclass",
   "devDependencies": {
+    "benchmark": "^1.0.0",
     "curb": "^1.0.0",
     "grunt": "^0.4.5",
-    "grunt-benchmark": "^0.3.0",
     "grunt-browserify": "^3.2.1",
     "grunt-contrib-jasmine": "^0.8.0",
     "grunt-contrib-jshint": "^0.10.0",

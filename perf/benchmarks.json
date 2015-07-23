@@ -1,6 +1,20 @@
 {
-  "applyname": 60,
-  "applynameWargs": 42,
-  "callname": 18,
-  "callnameWargs": 60
+  "3.0.0": {
+    "create": 99,
+    "extend": 95,
+    "use": 84,
+    "base": 88
+  },
+  "3.1.0": {
+    "create": 99,
+    "extend": 95,
+    "use": 78,
+    "base": 87
+  },
+  "3.1.1": {
+    "create": 99,
+    "extend": 95,
+    "use": 74,
+    "base": 87
+  }
 }

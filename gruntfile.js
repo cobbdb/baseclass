@@ -17,8 +17,7 @@ module.exports = function (grunt) {
         'jasmine:modules'
     ]);
     grunt.registerTask('perf', 'Run performance tests.', [
-        'benchmark:nirvana',
-        'benchmark:current',
+        'benchmark',
         'perf-report'
     ]);
 };
