@@ -1,6 +1,6 @@
 {
   "name": "baseclassjs",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Lean yet robust JavaScript inheritance.",
   "main": "src/baseclass.js",
   "scripts": {
