@@ -1,4 +1,5 @@
-var rebind = require('./rebind.js'),
+var BaseSwap = require('./base-swap.js'),
+    Bind = require('./bind.js'),
     Stub = require('./stub.js');
 
 /**
@@ -19,17 +20,17 @@ function contructor(root) {
         };
         child = child || {};
 
-        // Rebind methods to use correct child.
+        // Create a new base object for this level.
         for (key in root) {
-            if (typeof root[key] === 'function') {
-                base[key] = root[key].bind(root);
+            if (root[key] instanceof global.Function) {
+                base[key] = Bind(root[key], root);
             }
         }
 
-        // Inherit from parent.
+        // Create new inheritance level in root object.
         for (key in child) {
-            if (typeof child[key] === 'function') {
-                root[key] = rebind(key, root, base, child);
+            if (child[key] instanceof global.Function) {
+                root[key] = BaseSwap(key, root, base, child);
             } else {
                 root[key] = child[key];
             }
