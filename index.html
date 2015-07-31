@@ -46,14 +46,10 @@ after it is <code>npm install</code>'d.</p>
 version of the library is blazing fast.</p>
 
 <ul>
-<li>Creation: <a href="https://plot.ly/%7Ecobbdb/69/baseclass-create/">https://plot.ly/~cobbdb/69/baseclass-create/</a>
-</li>
-<li>Extension: <a href="https://plot.ly/%7Ecobbdb/74/baseclass-extend/">https://plot.ly/~cobbdb/74/baseclass-extend/</a>
-</li>
-<li>Method calls: <a href="https://plot.ly/%7Ecobbdb/72/baseclass-use/">https://plot.ly/~cobbdb/72/baseclass-use/</a>
-</li>
-<li>Parent method calls: <a href="https://plot.ly/%7Ecobbdb/68/baseclass-base/">https://plot.ly/~cobbdb/68/baseclass-base/</a>
-</li>
+<li><a href="https://plot.ly/%7Ecobbdb/69/baseclass-create">Base class creation</a></li>
+<li><a href="https://plot.ly/%7Ecobbdb/74/baseclass-extend">Class extension</a></li>
+<li><a href="https://plot.ly/%7Ecobbdb/72/baseclass-use">this.base method calls</a></li>
+<li><a href="https://plot.ly/%7Ecobbdb/68/baseclass-base">Leaf-most method calls</a></li>
 </ul>
 
 <h2>
@@ -119,23 +115,15 @@ it has been newly created.</p>
 };</pre></div>
 
 <h4>
-<a id="thisbase--thisself" class="anchor" href="#thisbase--thisself" aria-hidden="true"><span class="octicon octicon-link"></span></a>this.base &amp; this.self</h4>
+<a id="thisbase" class="anchor" href="#thisbase" aria-hidden="true"><span class="octicon octicon-link"></span></a>this.base</h4>
 
 <p>Any child can access its parent's methods with the <code>this.base</code> object.
 This is provided automatically to each child method and works in the
 same way as Java's <code>super</code> keyword.</p>
 
-<p>Likewise, since the <code>this</code> keyword always points at the leaf-most child,
-parents can access themselves with the <code>this.self</code> object. <code>this.self</code> is
-intended for those rare situations when your code does not want to run the
-leaf-most override of a function, but rather the function at its own
-inheritance level.</p>
-
-<p>Here is an example using both <code>this.base</code> and <code>this.self</code>:</p>
-
 <div class="highlight highlight-javascript"><pre><span class="pl-k">function</span> <span class="pl-en">Machine</span>() {
     <span class="pl-k">return</span> BaseClass({
-        <span class="pl-en">alarm</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
+        <span class="pl-en">alert</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
             <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>alert: <span class="pl-pds">'</span></span>;
         }
     });
@@ -144,11 +132,7 @@ inheritance level.</p>
 <div class="highlight highlight-javascript"><pre><span class="pl-k">function</span> <span class="pl-en">Vehicle</span>() {
     <span class="pl-k">return</span> Machine().extend({
         <span class="pl-en">honk</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
-            <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>beep beep<span class="pl-pds">'</span></span>;
-        },
-        <span class="pl-en">alarm</span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">msg</span>) {
-            msg <span class="pl-k">+=</span> <span class="pl-v">this</span>.base.alarm();
-            <span class="pl-k">return</span> msg <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-c1">self</span>.honk();
+            <span class="pl-k">return</span> <span class="pl-v">this</span>.base.<span class="pl-c1">alert</span>() <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>beep beep<span class="pl-pds">'</span></span>;
         }
     });
 }</pre></div>
@@ -156,15 +140,14 @@ inheritance level.</p>
 <div class="highlight highlight-javascript"><pre><span class="pl-k">function</span> <span class="pl-en">Car</span>() {
     <span class="pl-k">return</span> Vehicle().extend({
         <span class="pl-en">honk</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
-            <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>ahooooga<span class="pl-pds">'</span></span>;
+            <span class="pl-k">return</span> <span class="pl-v">this</span>.base.honk() <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>, ahooooga<span class="pl-pds">'</span></span>;
         }
     });
 }</pre></div>
 
 <div class="highlight highlight-javascript"><pre><span class="pl-c">// my-app.js</span>
 <span class="pl-k">var</span> mycar <span class="pl-k">=</span> Car();
-<span class="pl-en">console</span><span class="pl-c1">.log</span>(mycar.honk()); <span class="pl-c">// --&gt; ahooooga</span>
-<span class="pl-en">console</span><span class="pl-c1">.log</span>(mycar.alarm(<span class="pl-s"><span class="pl-pds">'</span>!&gt; <span class="pl-pds">'</span></span>)); <span class="pl-c">// --&gt; !&gt; alert: beep beep</span></pre></div>
+<span class="pl-en">console</span><span class="pl-c1">.log</span>(mycar.honk()); <span class="pl-c">// --&gt; alert: beep beep, ahooooga</span></pre></div>
 
 <h2>
 <a id="baseclassabstract" class="anchor" href="#baseclassabstract" aria-hidden="true"><span class="octicon octicon-link"></span></a>BaseClass.Abstract</h2>
@@ -221,40 +204,6 @@ provided to all children. This can be done easily with the <code>Stub</code> met
 <div class="highlight highlight-javascript"><pre><span class="pl-c">// my-app.js</span>
 <span class="pl-k">var</span> whip <span class="pl-k">=</span> Car(<span class="pl-s"><span class="pl-pds">'</span>Honda<span class="pl-pds">'</span></span>);
 whip.honk(); <span class="pl-c">// --&gt; Nothing happens.</span></pre></div>
-
-<h2>
-<a id="baseclassinterface--implement" class="anchor" href="#baseclassinterface--implement" aria-hidden="true"><span class="octicon octicon-link"></span></a>BaseClass.Interface() &amp; implement()</h2>
-
-<p>If you only want to attach attributes without changing an
-object's type, you can define an <code>Interface</code>. All children
-contain an <code>implement()</code> method used to attach one or more
-interfaces.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// honkable.js</span>
-<span class="pl-k">var</span> BaseClass <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>baseclassjs<span class="pl-pds">'</span></span>);
-<span class="pl-c1">module</span>.exports <span class="pl-k">=</span> BaseClass.Interface({
-    <span class="pl-en">honk</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
-        <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>beep beep<span class="pl-pds">'</span></span>;
-    }
-});</pre></div>
-
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// car.js</span>
-<span class="pl-k">var</span> Vehicle <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./vehicle.js<span class="pl-pds">'</span></span>),
-    Honkable <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./honkable.js<span class="pl-pds">'</span></span>),
-    Driveable <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./driveable.js<span class="pl-pds">'</span></span>);
-<span class="pl-c1">module</span>.<span class="pl-en">exports</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">model</span>) {
-    <span class="pl-k">return</span> Vehicle(model).extend({
-        weight<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>1000lbs<span class="pl-pds">'</span></span>
-    }).implement(
-        Honkable,
-        Driveable
-    );
-};</pre></div>
-
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// myapp.js</span>
-<span class="pl-k">var</span> Car <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./cat.js<span class="pl-pds">'</span></span>);
-mycar <span class="pl-k">=</span> Car(<span class="pl-s"><span class="pl-pds">'</span>honda<span class="pl-pds">'</span></span>);
-mycar.honk(); <span class="pl-c">// --&gt; beep beep</span></pre></div>
 
 <hr>
 
