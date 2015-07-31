@@ -2,7 +2,6 @@ describe('global function', function () {
     it('is defined', function () {
         expect(BaseClass).toBeDefined();
         expect(typeof BaseClass).toEqual('function', 'Constructor');
-        expect(typeof BaseClass.Interface).toEqual('function', 'Interface');
     });
     it('throws no errors', function () {
         expect(function () {

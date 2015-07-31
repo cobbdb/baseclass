@@ -87,23 +87,15 @@ module.exports = function () {
 };
 ```
 
-#### this.base & this.self
+#### this.base
 Any child can access its parent's methods with the `this.base` object.
 This is provided automatically to each child method and works in the
 same way as Java's `super` keyword.
 
-Likewise, since the `this` keyword always points at the leaf-most child,
-parents can access themselves with the `this.self` object. `this.self` is
-intended for those rare situations when your code does not want to run the
-leaf-most override of a function, but rather the function at its own
-inheritance level.
-
-Here is an example using both `this.base` and `this.self`:
-
 ```javascript
 function Machine() {
     return BaseClass({
-        alarm: function () {
+        alert: function () {
             return 'alert: ';
         }
     });
@@ -113,11 +105,7 @@ function Machine() {
 function Vehicle() {
     return Machine().extend({
         honk: function () {
-            return 'beep beep';
-        },
-        alarm: function (msg) {
-            msg += this.base.alarm();
-            return msg + this.self.honk();
+            return this.base.alert() + 'beep beep';
         }
     });
 }
@@ -126,7 +114,7 @@ function Vehicle() {
 function Car() {
     return Vehicle().extend({
         honk: function () {
-            return 'ahooooga';
+            return this.base.honk() + ', ahooooga';
         }
     });
 }
@@ -134,8 +122,7 @@ function Car() {
 ```javascript
 // my-app.js
 var mycar = Car();
-console.log(mycar.honk()); // --> ahooooga
-console.log(mycar.alarm('!> ')); // --> !> alert: beep beep
+console.log(mycar.honk()); // --> alert: beep beep, ahooooga
 ```
 
 ## BaseClass.Abstract
@@ -196,42 +183,6 @@ var Car = function (model) {
 // my-app.js
 var whip = Car('Honda');
 whip.honk(); // --> Nothing happens.
-```
-
-## BaseClass.Interface() & implement()
-If you only want to attach attributes without changing an
-object's type, you can define an `Interface`. All children
-contain an `implement()` method used to attach one or more
-interfaces.
-
-```javascript
-// honkable.js
-var BaseClass = require('baseclassjs');
-module.exports = BaseClass.Interface({
-    honk: function () {
-        return 'beep beep';
-    }
-});
-```
-```javascript
-// car.js
-var Vehicle = require('./vehicle.js'),
-    Honkable = require('./honkable.js'),
-    Driveable = require('./driveable.js');
-module.exports = function (model) {
-    return Vehicle(model).extend({
-        weight: '1000lbs'
-    }).implement(
-        Honkable,
-        Driveable
-    );
-};
-```
-```javascript
-// myapp.js
-var Car = require('./cat.js');
-mycar = Car('honda');
-mycar.honk(); // --> beep beep
 ```
 
 ---------

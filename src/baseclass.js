@@ -1,5 +1,4 @@
 var BaseSwap = require('./base-swap.js'),
-    Bind = require('./bind.js'),
     Stub = require('./stub.js');
 
 /**
@@ -15,29 +14,22 @@ function contructor(root) {
      * @param {Object} [child] The next child.
      */
     root.extend = function (child) {
-        var key, base = {
-            base: root.base
-        };
+        var base = {
+                base: root.base
+            },
+            key;
         child = child || {};
+        root.base = base;
 
-        // Create a new base object for this level.
         for (key in root) {
             if (root[key] instanceof global.Function) {
-                base[key] = Bind(root[key], root);
+                base[key] = BaseSwap(root[key], root, base.base);
             }
         }
 
-        // Create new inheritance level in root object.
         for (key in child) {
-            if (child[key] instanceof global.Function) {
-                root[key] = BaseSwap(key, root, base, child);
-            } else {
-                root[key] = child[key];
-            }
+            root[key] = child[key];
         }
-
-        // Provide back link.
-        root.base = base;
 
         // Execute any construction logic.
         if ('_create' in child) {
@@ -46,19 +38,6 @@ function contructor(root) {
             root._create = Stub;
         }
 
-        return root;
-    };
-
-    /**
-     * Provide hook for interfaces.
-     * @param {Interface} Any number of Interfaces
-     * to apply.
-     */
-    root.implement = function () {
-        var i, len = arguments.length;
-        for (i = 0; i < len; i += 1) {
-            arguments[i](root);
-        }
         return root;
     };
 
@@ -76,6 +55,5 @@ function contructor(root) {
 
 contructor.Abstract = require('./abstract.js');
 contructor.Stub = Stub;
-contructor.Interface = require('./interface.js');
 
 module.exports = contructor;

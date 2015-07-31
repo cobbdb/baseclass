@@ -26,12 +26,6 @@ module.exports = {
             bye: function () {
                 return this.base.speak();
             },
-            cry: function () {
-                return this.self.getSadMsg();
-            },
-            getSadMsg: function () {
-                return 'boo hoo';
-            },
             summary: function () {
                 return this.base.summary();
             }
@@ -41,10 +35,10 @@ module.exports = {
         return this.Pet('Wolfie').extend({
             speak: function () {
                 return 'Dog test message';
-            },
-            getSadMsg: function () {
-                return 'ERROR';
             }
         });
+    },
+    Greyhound: function () {
+        return this.Dog().extend();
     }
 };

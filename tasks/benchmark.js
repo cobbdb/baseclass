@@ -12,6 +12,10 @@ module.exports = function (grunt) {
         testCurrent.run();
     });
 
+    grunt.registerTask('perf-current', function () {
+        testCurrent.run();
+    });
+
     grunt.registerTask('perf-report', function () {
         var test, currentBest, nirvanaWorst, diff, version,
             write = false;

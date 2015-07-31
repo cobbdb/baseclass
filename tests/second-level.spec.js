@@ -18,10 +18,9 @@ describe('Second level inheritance', function () {
         expect(test.base).toBeDefined();
         expect(test.base.speak()).toEqual('Animal Test Message');
     });
-    it('provides working `base` and `self`', function () {
+    it('provides working `base`', function () {
         expect(test.greet()).toEqual('Animal Test Message', 'leaf test');
         expect(test.bye()).toEqual('Animal Test Message', 'base test');
-        expect(test.cry()).toEqual('boo hoo');
     });
     it('can mutate with `this`', function () {
         expect(test.name).toEqual('TSTname', 'initial');

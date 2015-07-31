@@ -1,9 +1,9 @@
-var Setup = require('./helpers/class.helper.js');
+﻿var Setup = require('./helpers/class.helper.js');
 
-describe('Third level inheritance', function () {
+describe('Fourth level inheritance', function () {
     var test;
     beforeEach(function () {
-        test = Setup.Dog();
+        test = Setup.Greyhound();
     });
     it('exposes root properties', function () {
         expect(test.name).toEqual('Wolfie', 'name');
@@ -16,8 +16,9 @@ describe('Third level inheritance', function () {
     });
     it('binds `base` to the correct level', function () {
         expect(test.speak()).toEqual('Dog test message', 'dog');
-        expect(test.base.speak()).toEqual('Animal Test Message', 'pet');
-        expect(test.base.base.speak()).toEqual('Animal Test Message', 'animal');
+        expect(test.base.speak()).toEqual('Dog test message', 'dog');
+        expect(test.base.base.speak()).toEqual('Animal Test Message', 'pet');
+        expect(test.base.base.base.speak()).toEqual('Animal Test Message', 'animal');
     });
     it('provides working `base`', function () {
         expect(test.base.greet()).toEqual('Dog test message', 'leaf test');
@@ -26,7 +27,8 @@ describe('Third level inheritance', function () {
     it('has correct number of base fields', function () {
         expect(test.base).toBeDefined();
         expect(test.base.base).toBeDefined();
-        expect(test.base.base.base).not.toBeDefined();
+        expect(test.base.base.base).toBeDefined();
+        expect(test.base.base.base.base).not.toBeDefined();
     });
     it('can mutate with `this`', function () {
         expect(test.name).toEqual('Wolfie', 'initial');
