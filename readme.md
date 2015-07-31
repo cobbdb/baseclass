@@ -21,8 +21,8 @@ Every release, performance data is gathered and graphed to ensure every
 version of the library is blazing fast.
 * [Base class creation](https://plot.ly/~cobbdb/69/baseclass-create)
 * [Class extension](https://plot.ly/~cobbdb/74/baseclass-extend)
-* [this.base method calls](https://plot.ly/~cobbdb/72/baseclass-use)
-* [Leaf-most method calls](https://plot.ly/~cobbdb/68/baseclass-base)
+* [Leaf-most method calls](https://plot.ly/~cobbdb/72/baseclass-use)
+* [this.base method calls](https://plot.ly/~cobbdb/68/baseclass-base)
 
 ## BaseClass() & extend()
 Here's a quick example showing a typical class setup.
